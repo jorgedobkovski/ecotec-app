@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "896665981152",
+    "project_id": "ecotec-30a76",
+    "storage_bucket": "ecotec-30a76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896665981152:android:dcd5133cb14b63d97e4085",
+        "android_client_info": {
+          "package_name": "com.ecotec.ecotec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896665981152-nhk29na5nb69ejtc9ceqtb2be46dp6go.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcjAnKvZkFsdTco9OoPMf3tsSdxo2GkzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896665981152-nhk29na5nb69ejtc9ceqtb2be46dp6go.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
