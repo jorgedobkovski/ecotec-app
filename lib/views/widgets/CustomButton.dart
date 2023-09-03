@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../main.dart';
 
 class CustomButton extends StatelessWidget {
 
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
         ),
       ),
       style: ElevatedButton.styleFrom(
-        primary: Colors.teal,
+        primary: customColor,
         padding: EdgeInsets.fromLTRB(32, 16, 31, 16),
       ),
     );

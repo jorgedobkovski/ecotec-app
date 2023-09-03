@@ -1,4 +1,4 @@
-class Usuario{
+class UserApp{
   late String _idUser;
   late String _name;
   late String _email;
