@@ -19,7 +19,7 @@ class _LoginState extends State<Login> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  _logUser(UserApp user){
+  _loginUser(UserApp user){
     FirebaseAuth auth = FirebaseAuth.instance;
     auth.signInWithEmailAndPassword(
         email: user.email,
@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
         user.email = email;
         user.password = password;
 
-        _logUser(user);
+        _loginUser(user);
 
       } else {
         setState(() {

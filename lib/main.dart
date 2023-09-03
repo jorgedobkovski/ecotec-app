@@ -1,5 +1,4 @@
-import 'package:ecotec/Home.dart';
-import 'package:ecotec/views/Login.dart';
+import 'package:ecotec/views/Index.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +30,8 @@ void main()async {
   runApp(MaterialApp(
     title: "Ecotec",
     theme: ecotecTheme,
-    home: Login(),
-    initialRoute: "/login",
+    home: Index(),
+    initialRoute: "/index",
     onGenerateRoute: RouteGenerator.generateRoute,
     debugShowCheckedModeBanner: false,
   ));
