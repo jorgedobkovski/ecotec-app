@@ -1,3 +1,4 @@
+import 'package:ecotec/views/Index.dart';
 import 'package:ecotec/views/Login.dart';
 import 'package:ecotec/views/Register.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,9 @@ class RouteGenerator{
   static Route<dynamic> generateRoute(RouteSettings settings){
     final args = settings.arguments;
     switch(settings.name) {
-      case "/":
+      case "/index":
         return MaterialPageRoute(
-            builder: (_) => Login()
+            builder: (_) => Index()
         );
       case "/login":
         return MaterialPageRoute(

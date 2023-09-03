@@ -1,6 +1,9 @@
 import 'package:ecotec/views/widgets/CustomButton.dart';
 import 'package:ecotec/views/widgets/CustomTextInput.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../models/UserApp.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,8 +14,45 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
+  String _errorMessage = "";
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  _logUser(UserApp user){
+    FirebaseAuth auth = FirebaseAuth.instance;
+    auth.signInWithEmailAndPassword(
+        email: user.email,
+        password: user.password
+    ).then((firebaseUser){
+      Navigator.pushReplacementNamed(context, "/index");
+    });
+  }
+
+  _validateInputs(){
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    if(email.isNotEmpty && email.contains("@")){
+      if(password.isNotEmpty && password.length>6){
+
+        UserApp user = UserApp();
+        user.email = email;
+        user.password = password;
+
+        _logUser(user);
+
+      } else {
+        setState(() {
+          _errorMessage = "Senha inválida";
+        });
+      }
+    } else {
+      setState(() {
+        _errorMessage = "E-mail inválido";
+      });
+    }
+  }
 
 
   @override
@@ -52,11 +92,11 @@ class _LoginState extends State<Login> {
                 ),
                 CustomButton(
                   text: "Entrar",
-                  onPressed: (){},
+                  onPressed: _validateInputs,
                 ),
                 TextButton(
                     onPressed: (){
-                      Navigator.pushReplacementNamed(context, "/");
+                      Navigator.pushReplacementNamed(context, "/index");
                     },
                     child: Text("Ir para anúncios")
                 ),
@@ -68,7 +108,7 @@ class _LoginState extends State<Login> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
-                  child: Text("Alterar mensagem de erro", style: TextStyle(
+                  child: Text(_errorMessage, style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.red

@@ -32,7 +32,7 @@ void main()async {
     title: "Ecotec",
     theme: ecotecTheme,
     home: Login(),
-    initialRoute: "/",
+    initialRoute: "/login",
     onGenerateRoute: RouteGenerator.generateRoute,
     debugShowCheckedModeBanner: false,
   ));
