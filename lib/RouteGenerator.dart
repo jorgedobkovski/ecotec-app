@@ -1,5 +1,7 @@
 import 'package:ecotec/views/Index.dart';
 import 'package:ecotec/views/Login.dart';
+import 'package:ecotec/views/My_Offers.dart';
+import 'package:ecotec/views/New_Offer.dart';
 import 'package:ecotec/views/Register.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,14 @@ class RouteGenerator{
       case "/register":
         return MaterialPageRoute(
             builder: (_) => Register()
+        );
+      case "/new-offer":
+        return MaterialPageRoute(
+            builder: (_) => NewOffer()
+        );
+      case "/my-offers":
+        return MaterialPageRoute(
+            builder: (_) => MyOffers()
         );
       default:
         return _erroRota();

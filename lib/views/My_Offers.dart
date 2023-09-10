@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../models/Offer.dart';
+import 'package:flutter/material.dart';
 
 class MyOffers extends StatefulWidget {
   const MyOffers({super.key});
@@ -68,7 +67,7 @@ class _MyOffersState extends State<MyOffers> {
                     DocumentSnapshot documentSnapshot = offers[index];
                     Offer offer = Offer.fromDocumentSnapshot(documentSnapshot);
 
-                    return 
+                    return Container();
                   }
               );
           }

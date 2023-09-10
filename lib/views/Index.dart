@@ -32,7 +32,7 @@ class _IndexState extends State<Index> {
   _selectedMenuItem(String selectedItem){
     switch(selectedItem){
       case "Meus anúncios":
-        Navigator.pushNamed(context, "/meus-anuncios");
+        Navigator.pushNamed(context, "/my-offers");
         break;
       case "Entrar/Cadastrar":
         Navigator.pushNamed(context, "/login");
