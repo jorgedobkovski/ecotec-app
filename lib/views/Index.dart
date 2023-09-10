@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecotec/models/Offer.dart';
+import 'package:ecotec/views/widgets/OfferWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +16,7 @@ class Index extends StatefulWidget {
 class _IndexState extends State<Index> {
 
   List<String> _menuItems = [""];
+  final _controller = StreamController<QuerySnapshot>.broadcast();
 
   _logoutUser() async{
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -43,15 +49,35 @@ class _IndexState extends State<Index> {
     }
   }
 
+  Future<Stream<QuerySnapshot>> _listenerOffers() async{
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    Stream<QuerySnapshot> stream = db.collection("offers").snapshots();
+
+    stream.listen((data) {
+      _controller.add(data);
+    });
+
+    return stream;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _verifyUser();
+    _listenerOffers();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    var loadingData = Center(
+      child: Column(children: <Widget>[
+        Text("Carregando anúncios..."),
+        CircularProgressIndicator()
+      ],),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Ecotec"),
@@ -76,9 +102,54 @@ class _IndexState extends State<Index> {
               Text("Filtros")
             ],
           ),
-          Column(children: <Widget>[
-              Text("Anuncios")
-          ],)
+          StreamBuilder(
+            stream: _controller.stream,
+            builder: (context, snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return loadingData;
+                  break;
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  QuerySnapshot querySnapshot = snapshot.data!;
+                  if(querySnapshot.docs.length == 0){
+                    return Container(
+                      padding: EdgeInsets.all(25),
+                      child: Text(
+                        "Nenhum anúncio! :(",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                      ),
+                    );
+                  }
+                  return Expanded(
+                      child: ListView.builder(
+                          itemCount: querySnapshot.docs.length,
+                          itemBuilder: (_, index){
+                            List<DocumentSnapshot> offers = querySnapshot.docs.toList();
+                            DocumentSnapshot documentSnapshot = offers[index];
+                            Offer offer = Offer.fromDocumentSnapshot(documentSnapshot);
+
+                            return OfferWidget(
+                              offer: offer,
+                              onTapItem: (){
+                                Navigator.pushNamed(
+                                  context,
+                                  "offer-details",
+                                  arguments: offer
+                                );
+                              },
+                            );
+                          }
+                      ),
+                  );
+              }
+              return Container();
+            },
+          ),
         ],),
       ),
     );
