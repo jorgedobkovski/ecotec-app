@@ -41,6 +41,8 @@ dependencies:
   firebase_storage: ^11.2.6
   cloud_firestore: ^4.8.5
   image_picker: ^1.0.4
+  validadores: ^1.0.9
+  brasil_fields: ^1.14.0
 
 
 dev_dependencies:
