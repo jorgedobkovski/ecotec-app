@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecotec/models/Offer.dart';
+import 'package:ecotec/views/widgets/MainFilterWidget.dart';
 import 'package:ecotec/views/widgets/OfferWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -98,9 +99,9 @@ class _IndexState extends State<Index> {
       ),
       body: Container(
         child: Column(children: <Widget>[
-          Row(children: <Widget>[
-              Text("Filtros")
-            ],
+          Container(
+            height: 100,
+            child: MainFilterWidget(),
           ),
           StreamBuilder(
             stream: _controller.stream,
