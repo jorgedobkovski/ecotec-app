@@ -139,7 +139,7 @@ class _IndexState extends State<Index> {
                               onTapItem: (){
                                 Navigator.pushNamed(
                                   context,
-                                  "offer-details",
+                                  "/offer-details",
                                   arguments: offer
                                 );
                               },
