@@ -1,13 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecotec/main.dart';
 import 'package:ecotec/models/Offer.dart';
+import 'package:ecotec/models/UserApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 class OfferDetails extends StatefulWidget {
 
-  Offer offer;
+  final Offer offer;
   OfferDetails(this.offer);
-
 
   @override
   State<OfferDetails> createState() => _OfferDetailsState();
@@ -16,6 +17,9 @@ class OfferDetails extends StatefulWidget {
 class _OfferDetailsState extends State<OfferDetails> {
 
   late Offer _offer;
+  late UserApp? _userApp;
+  String _userName = "";
+  String _userPic = "https://firebasestorage.googleapis.com/v0/b/ecotec-30a76.appspot.com/o/profile_pics%2FwzTa3zTkzVdm5L3Y5XsfnfNqKgA3%2Fnull.jpg?alt=media&token=3c9f7867-3073-44ca-8e0b-7bcfe62bebb5";
 
   List<Widget> _getImagesList(){
     List<String> imagesUrlList = _offer.pictures;
@@ -32,11 +36,32 @@ class _OfferDetailsState extends State<OfferDetails> {
     }).toList();
   }
 
+  Future<void> fetchUserById(String userId) async {
+    try {
+      final usersCollection = FirebaseFirestore.instance.collection('users');
+      final userDoc = await usersCollection.doc(userId).get();
+
+      if (userDoc.exists) {
+        _userApp = UserApp.fromDocumentSnapshot(userDoc);
+        setState(() {
+          _userName = _userApp!.name;
+          _userPic = _userApp!.profilePhotoUrl;
+        });
+      } else {
+        print("User not found");
+      }
+    } catch (e) {
+      print('Error fetching user by ID: $e');
+    }
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _offer = widget.offer;
+    fetchUserById(_offer.userId);
   }
 
   @override
@@ -111,19 +136,15 @@ class _OfferDetailsState extends State<OfferDetails> {
                   Row(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundColor: Colors.grey[400],
-                        radius: 30,
-                        child: Icon(Icons.person,
-                          color: Colors.white,
-                          size: 40,
-                        ),
+                        backgroundImage: NetworkImage(_userPic!),
+                        radius: 30
                       ),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text("Usuário",
+                            Text(_userName!,
                                 style:TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,

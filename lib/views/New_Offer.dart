@@ -102,6 +102,8 @@ class _NewOfferState extends State<NewOffer> {
     User currentUser = await auth.currentUser!;
     String currentUserId = currentUser.uid;
 
+    _offer.userId = currentUserId;
+
     FirebaseFirestore db = FirebaseFirestore.instance;
     db.collection("my_offers")
     .doc(currentUserId)

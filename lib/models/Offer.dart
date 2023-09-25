@@ -8,6 +8,10 @@ class Offer{
   String _title= "";
   String _price= "";
   String _description= "";
+  String _userId = "";
+
+
+
   List<String> _pictures = List.empty(growable: true);
 
   Offer(){
@@ -21,6 +25,7 @@ class Offer{
     this.title = documentSnapshot["title"];
     this.price = documentSnapshot["price"];
     this.description = documentSnapshot["description"];
+    this.userId = documentSnapshot["userId"];
     this.pictures = List<String>.from(documentSnapshot["pictures"]);
   }
 
@@ -41,6 +46,7 @@ class Offer{
       "title": this.title,
       "price": this.price,
       "description": this.description,
+      "userId": this.userId,
       "pictures": this.pictures
     };
 
@@ -88,5 +94,11 @@ class Offer{
 
   set location(String value) {
     _location = value;
+  }
+
+  String get userId => _userId;
+
+  set userId(String value) {
+    _userId = value;
   }
 }
