@@ -50,7 +50,7 @@ class _IndexState extends State<Index> {
     }
   }
 
-  Future<Stream<QuerySnapshot>> _listenerOffers() async{
+  Future<Stream<QuerySnapshot>> _listenerOffers() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
     Stream<QuerySnapshot> stream = db.collection("offers").snapshots();
 
@@ -89,7 +89,7 @@ class _IndexState extends State<Index> {
             itemBuilder: (context){
               return _menuItems.map((String item){
                 return PopupMenuItem<String>(
-                    value: item,
+                  value: item,
                   child: Text(item),
                 );
               }).toList();
@@ -101,7 +101,7 @@ class _IndexState extends State<Index> {
         child: Column(children: <Widget>[
           Container(
             height: 100,
-            child: MainFilterWidget(),
+            child: MainFilterWidget(controller: _controller,),
           ),
           StreamBuilder(
             stream: _controller.stream,
@@ -120,32 +120,32 @@ class _IndexState extends State<Index> {
                       child: Text(
                         "Nenhum anúncio! :(",
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     );
                   }
                   return Expanded(
-                      child: ListView.builder(
-                          itemCount: querySnapshot.docs.length,
-                          itemBuilder: (_, index){
-                            List<DocumentSnapshot> offers = querySnapshot.docs.toList();
-                            DocumentSnapshot documentSnapshot = offers[index];
-                            Offer offer = Offer.fromDocumentSnapshot(documentSnapshot);
+                    child: ListView.builder(
+                        itemCount: querySnapshot.docs.length,
+                        itemBuilder: (_, index){
+                          List<DocumentSnapshot> offers = querySnapshot.docs.toList();
+                          DocumentSnapshot documentSnapshot = offers[index];
+                          Offer offer = Offer.fromDocumentSnapshot(documentSnapshot);
 
-                            return OfferWidget(
-                              offer: offer,
-                              onTapItem: (){
-                                Navigator.pushNamed(
+                          return OfferWidget(
+                            offer: offer,
+                            onTapItem: (){
+                              Navigator.pushNamed(
                                   context,
                                   "/offer-details",
                                   arguments: offer
-                                );
-                              },
-                            );
-                          }
-                      ),
+                              );
+                            },
+                          );
+                        }
+                    ),
                   );
               }
               return Container();

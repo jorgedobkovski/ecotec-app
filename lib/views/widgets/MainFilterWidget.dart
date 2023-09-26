@@ -4,7 +4,9 @@ import 'package:ecotec/models/Category.dart';
 import 'package:flutter/material.dart';
 
 class MainFilterWidget extends StatefulWidget {
-  const MainFilterWidget({super.key});
+  const MainFilterWidget({super.key, required this.controller});
+
+  final StreamController<QuerySnapshot> controller;
 
   @override
   State<MainFilterWidget> createState() => _MainFilterWidgetState();
@@ -13,7 +15,25 @@ class MainFilterWidget extends StatefulWidget {
 class _MainFilterWidgetState extends State<MainFilterWidget> {
 
   final _categoryController = StreamController<QuerySnapshot>.broadcast();
+  String _selectedCategory = "";
 
+  get controller => widget.controller;
+
+
+  Future<void> _filterOffers() async{
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    Query query = db.collection("offers");
+
+    if(_selectedCategory.isNotEmpty){
+      query = query.where("category", isEqualTo: _selectedCategory);
+    }
+
+    Stream<QuerySnapshot> stream = query.snapshots();
+
+    stream.listen((data) {
+      controller.add(data);
+    });
+  }
 
   Future<Stream<QuerySnapshot>> _listenerCategories()async{
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -69,15 +89,26 @@ class _MainFilterWidgetState extends State<MainFilterWidget> {
                         documentSnapshot);
 
                     return GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 100,
-                        child: Card(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = category.id;
+                          _filterOffers();
+                        });
+                      },
+                      child: Card(
+                        child: Container(
+                          width: 100,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: _selectedCategory == category.id ? Colors.green : Colors.transparent,
+                                width: 2,
+                              )
+                          ),
                           child: Text(
                               category.name
                           ),
                         ),
-                      ),
+                      )
                     );
                   }
               );
