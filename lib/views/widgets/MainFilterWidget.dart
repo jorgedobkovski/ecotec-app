@@ -3,10 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecotec/models/Category.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/Offer.dart';
+
 class MainFilterWidget extends StatefulWidget {
-  const MainFilterWidget({super.key, required this.controller});
+  MainFilterWidget({super.key, required this.controller, required this.callback});
 
   final StreamController<QuerySnapshot> controller;
+  final Function callback;
 
   @override
   State<MainFilterWidget> createState() => _MainFilterWidgetState();
@@ -18,7 +21,11 @@ class _MainFilterWidgetState extends State<MainFilterWidget> {
   String _selectedCategory = "";
 
   get controller => widget.controller;
+  get callback => widget.callback;
 
+  String getSelectedCategory() {
+    return _selectedCategory;
+  }
 
   Future<void> _filterOffers() async{
     FirebaseFirestore db = FirebaseFirestore.instance;
@@ -91,7 +98,13 @@ class _MainFilterWidgetState extends State<MainFilterWidget> {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          _selectedCategory = category.id;
+                          if(_selectedCategory != category.id){
+                            _selectedCategory = category.id;
+                            callback(category.id);
+                          } else{
+                            _selectedCategory = "";
+                            callback("");
+                          }
                           _filterOffers();
                         });
                       },

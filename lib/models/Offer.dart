@@ -6,6 +6,7 @@ class Offer{
   String _location= "";
   String _category= "";
   String _title= "";
+  String _titleToLowerCase= "";
   String _price= "";
   String _description= "";
   String _userId = "";
@@ -23,6 +24,7 @@ class Offer{
     this.location = documentSnapshot["location"];
     this.category = documentSnapshot["category"];
     this.title = documentSnapshot["title"];
+    this.titleToLowerCase = documentSnapshot["titleToLowerCase"];
     this.price = documentSnapshot["price"];
     this.description = documentSnapshot["description"];
     this.userId = documentSnapshot["userId"];
@@ -44,6 +46,7 @@ class Offer{
       "location": this.location,
       "category": this.category,
       "title": this.title,
+      "titleToLowerCase": this.titleToLowerCase,
       "price": this.price,
       "description": this.description,
       "userId": this.userId,
@@ -100,5 +103,11 @@ class Offer{
 
   set userId(String value) {
     _userId = value;
+  }
+
+  String get titleToLowerCase => _titleToLowerCase;
+
+  set titleToLowerCase(String value) {
+    _titleToLowerCase = value;
   }
 }

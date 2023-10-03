@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecotec/models/Offer.dart';
+import 'package:ecotec/views/widgets/CustomSearchBar.dart';
 import 'package:ecotec/views/widgets/MainFilterWidget.dart';
 import 'package:ecotec/views/widgets/OfferWidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,12 +18,17 @@ class Index extends StatefulWidget {
 class _IndexState extends State<Index> {
 
   List<String> _menuItems = [""];
+  String _selectedCategoryIndex = "";
   final _controller = StreamController<QuerySnapshot>.broadcast();
 
   _logoutUser() async{
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.signOut();
     Navigator.pushNamed(context, "/login");
+  }
+
+  void callbackDaAppBar(String variavel){
+    setState((){_selectedCategoryIndex = variavel;});
   }
 
   Future _verifyUser() async{
@@ -99,9 +105,22 @@ class _IndexState extends State<Index> {
       ),
       body: Container(
         child: Column(children: <Widget>[
-          Container(
-            height: 100,
-            child: MainFilterWidget(controller: _controller,),
+          Column(children: <Widget>[
+            Container(
+              height: 100,
+              child: CustomSearchBar(
+                controller: _controller,
+                selectedCategory: _selectedCategoryIndex,
+              ),
+            ),
+            Container(
+              height: 100,
+              child: MainFilterWidget(
+                controller: _controller,
+                callback: callbackDaAppBar,
+              ),
+            ),
+          ],
           ),
           StreamBuilder(
             stream: _controller.stream,

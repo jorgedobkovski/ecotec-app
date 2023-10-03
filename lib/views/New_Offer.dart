@@ -304,6 +304,7 @@ class _NewOfferState extends State<NewOffer> {
                     hint: "Título",
                     onSaved: (title){
                       _offer.title = title!;
+                      _offer.titleToLowerCase = title!.toLowerCase();
                     },
                     validator: (value){
                       return Validador()
