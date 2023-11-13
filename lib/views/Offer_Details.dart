@@ -4,6 +4,8 @@ import 'package:ecotec/models/Offer.dart';
 import 'package:ecotec/models/UserApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class OfferDetails extends StatefulWidget {
 
@@ -52,6 +54,20 @@ class _OfferDetailsState extends State<OfferDetails> {
       }
     } catch (e) {
       print('Error fetching user by ID: $e');
+    }
+  }
+
+  void _launchWhatsApp() async {
+
+    var phoneNumber = _userApp!.phone;
+    var offerTitle = _offer.title;
+    var message = Uri.encodeComponent("Olá! Tenho interesse no seu anúncio $offerTitle no aplicativo EcoTec.");
+    var uri = Uri.parse("https://api.whatsapp.com/send?phone=55$phoneNumber&text=$message");
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      print("Não foi possível abrir o link do WhatsApp");
     }
   }
 
@@ -189,7 +205,7 @@ class _OfferDetailsState extends State<OfferDetails> {
             ),
           ),
           onTap: (){
-
+            _launchWhatsApp();
           },
           ),
         )

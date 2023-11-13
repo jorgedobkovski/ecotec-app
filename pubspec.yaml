@@ -45,6 +45,7 @@ dependencies:
   brasil_fields: ^1.14.0
   flutter_swiper_null_safety: ^1.0.2
   provider: ^6.0.5
+  url_launcher: ^6.2.1
 
 
 dev_dependencies:
