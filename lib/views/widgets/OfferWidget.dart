@@ -15,53 +15,56 @@ class OfferWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: this.onTapItem,
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(12),
-          child: Row(children: <Widget>[
-
-            SizedBox(
-              width: 120,
-              height: 120,
-              child: Image.network(
-                offer.pictures[0],
-                fit: BoxFit.cover,
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      offer.title,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(offer.price),
-                  ],
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 7.5),
+      child: GestureDetector(
+        onTap: this.onTapItem,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: Container(
+            color: Color(0xFFF0F0F5),
+            child: Row(children: <Widget>[
+              SizedBox(
+                width: 120,
+                height: 120,
+                child: Image.network(
+                  offer.pictures[0],
+                  fit: BoxFit.cover,
                 ),
-              )
-            ),
-            if(this.onPressedRemover != null) Expanded(
+              ),
+              Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          offer.title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(offer.price),
+                      ],
+                    ),
+                  )
+              ),
+              if(this.onPressedRemover != null) Expanded(
                 flex: 1,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))
                   ),
                   onPressed: this.onPressedRemover,
                   child: Icon(Icons.delete, color: Colors.white,),
                 ),
-            ),
+              ),
 
-          ],),
+            ],),
+          ),
         ),
       ),
     );

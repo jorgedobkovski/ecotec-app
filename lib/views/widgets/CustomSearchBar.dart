@@ -39,6 +39,7 @@ class CustomSearchBar extends StatelessWidget {
       controller: _searchController,
       decoration: InputDecoration(
         hintText: 'Qual serviço você procura?',
+        border: InputBorder.none,
       ),
       onChanged: (query){
         _searchOffers();

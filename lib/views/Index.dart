@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecotec/models/Offer.dart';
+import 'package:ecotec/models/UserApp.dart';
+import 'package:ecotec/views/widgets/CustomAppBar.dart';
 import 'package:ecotec/views/widgets/CustomSearchBar.dart';
 import 'package:ecotec/views/widgets/MainFilterWidget.dart';
 import 'package:ecotec/views/widgets/OfferWidget.dart';
@@ -20,6 +22,7 @@ class _IndexState extends State<Index> {
   List<String> _menuItems = [""];
   String _selectedCategoryIndex = "";
   final _controller = StreamController<QuerySnapshot>.broadcast();
+  String profilePic = "https://firebasestorage.googleapis.com/v0/b/ecotec-30a76.appspot.com/o/profile_pics%2FwzTa3zTkzVdm5L3Y5XsfnfNqKgA3%2Fnull.jpg?alt=media&token=3c9f7867-3073-44ca-8e0b-7bcfe62bebb5";
 
   _logoutUser() async{
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -78,6 +81,26 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
 
+    var actionsAppBar = <Widget>[
+      Padding(
+        padding: EdgeInsets.only(right: 10),
+        child: PopupMenuButton(
+          icon: CircleAvatar(
+            backgroundImage: NetworkImage(profilePic)
+          ),
+          onSelected: _selectedMenuItem,
+          itemBuilder: (context){
+            return _menuItems.map((String item){
+              return PopupMenuItem<String>(
+                value: item,
+                child: Text(item),
+              );
+            }).toList();
+          },
+        ),
+      )
+    ];
+
     var loadingData = Center(
       child: Column(children: <Widget>[
         Text("Carregando anúncios..."),
@@ -86,33 +109,19 @@ class _IndexState extends State<Index> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Ecotec"),
-        elevation: 0,
-        actions: <Widget>[
-          PopupMenuButton(
-            onSelected: _selectedMenuItem,
-            itemBuilder: (context){
-              return _menuItems.map((String item){
-                return PopupMenuItem<String>(
-                  value: item,
-                  child: Text(item),
-                );
-              }).toList();
-            },
-          )
-        ],
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(
+        context: context,
+        height: AppBar().preferredSize.height,
+        searchBar: CustomSearchBar(
+          controller: _controller,
+          selectedCategory: _selectedCategoryIndex,
+        ),
+        actions: actionsAppBar,
       ),
       body: Container(
         child: Column(children: <Widget>[
           Column(children: <Widget>[
-            Container(
-              height: 100,
-              child: CustomSearchBar(
-                controller: _controller,
-                selectedCategory: _selectedCategoryIndex,
-              ),
-            ),
             Container(
               height: 100,
               child: MainFilterWidget(
@@ -146,24 +155,26 @@ class _IndexState extends State<Index> {
                     );
                   }
                   return Expanded(
+                    child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     child: ListView.builder(
                         itemCount: querySnapshot.docs.length,
                         itemBuilder: (_, index){
                           List<DocumentSnapshot> offers = querySnapshot.docs.toList();
                           DocumentSnapshot documentSnapshot = offers[index];
                           Offer offer = Offer.fromDocumentSnapshot(documentSnapshot);
-
                           return OfferWidget(
-                            offer: offer,
-                            onTapItem: (){
-                              Navigator.pushNamed(
-                                  context,
-                                  "/offer-details",
-                                  arguments: offer
+                             offer: offer,
+                             onTapItem: (){
+                             Navigator.pushNamed(
+                                   context,
+                                   "/offer-details",
+                                   arguments: offer
                               );
-                            },
-                          );
-                        }
+                              },
+                           );
+                          }
+                    ),
                     ),
                   );
               }

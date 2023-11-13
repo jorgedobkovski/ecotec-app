@@ -108,22 +108,26 @@ class _MainFilterWidgetState extends State<MainFilterWidget> {
                           _filterOffers();
                         });
                       },
-                      child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15, bottom: 15 ),
                         child: Container(
                           width: 100,
                           decoration: BoxDecoration(
-                              border: Border.all(
-                                color: _selectedCategory == category.id ? Colors.green : Colors.transparent,
-                                width: 2,
-                              )
+                            color: Color(0xFFF0F0F5),
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(
+                              color: _selectedCategory == category.id ? Colors.green : Colors.transparent,
+                              width: 2,
+                            ),
                           ),
-                          child: Text(
-                              category.name
+                          child: Center(
+                              child: Text(category.name)
                           ),
                         ),
                       )
-                    );
+                      );
                   }
+
               );
           }
         }
