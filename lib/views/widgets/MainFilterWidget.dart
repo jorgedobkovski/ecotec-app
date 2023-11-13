@@ -121,7 +121,29 @@ class _MainFilterWidgetState extends State<MainFilterWidget> {
                             ),
                           ),
                           child: Center(
-                              child: Text(category.name)
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 5),
+                                    child: Icon(
+                                      IconData(
+                                        int.parse(category.icon),
+                                        fontFamily: 'MaterialIcons',
+                                      ),
+                                      color: _selectedCategory == category.id ? Colors.green : Colors.black45,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  Text(category.name,
+                                    style: TextStyle(
+                                      color: _selectedCategory == category.id ? Colors.green : Colors.black45,
+                                      fontWeight: _selectedCategory == category.id ? FontWeight.w600 : FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              )
                           ),
                         ),
                       )
