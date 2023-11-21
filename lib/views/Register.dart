@@ -93,7 +93,12 @@ class _LoginState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastrar usuário"),
+        title: Text("Cadastrar usuário",
+            style: TextStyle(color: Colors.white)
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(16),

@@ -72,7 +72,12 @@ class _MyOffersState extends State<MyOffers> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Meus anúncios"),
+        title: Text("Meus anúncios",
+            style: TextStyle(color: Colors.white)
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(

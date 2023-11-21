@@ -84,7 +84,12 @@ class _OfferDetailsState extends State<OfferDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Anúncio"),
+        title: Text(_offer.title,
+            style: TextStyle(color: Colors.white)
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Stack(
         children: <Widget>[

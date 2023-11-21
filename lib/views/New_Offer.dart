@@ -133,7 +133,12 @@ class _NewOfferState extends State<NewOffer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Novo anúncio"),
+        title: Text("Novo anúncio",
+            style: TextStyle(color: Colors.white)
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(

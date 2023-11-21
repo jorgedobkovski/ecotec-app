@@ -22,7 +22,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Padding(
             padding: EdgeInsets.only(top: 10),
                 child: AppBar(
-                title: Text("Ecotec"),
+                title: Text("EcoTec",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700
+                    ),
+                ),
+                iconTheme: IconThemeData(
+                  color: Colors.white,
+                ),
                 actions: actions,
                 shadowColor: Colors.transparent,
             ),
