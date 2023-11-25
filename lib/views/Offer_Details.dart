@@ -154,33 +154,42 @@ class _OfferDetailsState extends State<OfferDetails> {
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Divider(),
                   ),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(_userPic!),
-                        radius: 30
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(_userName!,
-                                style:TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                )
-                            ),
-                            Text("Ver perfil",
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(
+                          context,
+                          "/user-profile",
+                          arguments: _userApp
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                            backgroundImage: NetworkImage(_userPic!),
+                            radius: 30
                         ),
-                      ),
-                    ],
-                  )
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(_userName!,
+                                  style:TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  )
+                              ),
+                              Text("Ver perfil",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
