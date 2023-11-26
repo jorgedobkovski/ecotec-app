@@ -7,6 +7,7 @@ class UserApp{
   late String _password;
   late String _phone;
   late String _profilePhotoUrl;
+  String? _bio;
 
   String get phone => _phone;
 
@@ -20,7 +21,8 @@ class UserApp{
     required String email,
     required String password,
     required String phone,
-    required String profilePhotoUrl
+    required String profilePhotoUrl,
+    String? bio,
   }) {
     _idUser = idUser;
     _name = name;
@@ -28,6 +30,7 @@ class UserApp{
     _password = password;
     _phone = phone;
     _profilePhotoUrl = profilePhotoUrl;
+    _bio = bio;
   }
 
   UserApp(){
@@ -40,6 +43,7 @@ class UserApp{
     this.email = documentSnapshot["email"];
     this.phone = documentSnapshot["telefone"];
     this.profilePhotoUrl = documentSnapshot["profilePhotoUrl"];
+    this.bio = documentSnapshot["bio"];
   }
 
   Map<String, dynamic> toMap(){
@@ -50,6 +54,7 @@ class UserApp{
       "email"     : this.email,
       "telefone"  : this.phone,
       "profilePhotoUrl": this.profilePhotoUrl,
+      "bio":        this.bio,
     };
 
     return map;
@@ -100,5 +105,11 @@ class UserApp{
 
   set profilePhotoUrl(String value) {
     _profilePhotoUrl = value;
+  }
+
+  String? get bio => _bio;
+
+  set bio(String? value) {
+    _bio = value;
   }
 }

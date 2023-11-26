@@ -112,7 +112,7 @@ class _UserProfileState extends State<UserProfile> {
                       Padding(
                         padding: EdgeInsets.only(bottom: 10, top: 10),
                         child: Text(
-                          "Amo ecologia desde que fui concebido. Me formei em biologia e reciclar é meu hobby. #LixoÉLuxo",
+                          _user.bio??"Nada a declarar",
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),

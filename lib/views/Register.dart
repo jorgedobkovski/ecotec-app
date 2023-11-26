@@ -243,6 +243,23 @@ class _LoginState extends State<Register> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 15),
+                    child: CustomTextInput(
+                      controller: _controller(),
+                      hint: "Biografia",
+                      type: TextInputType.text,
+                      maxLines: 5,
+                      onSaved: (bio){
+                        _userApp.bio = bio!;
+                      },
+                      validator: (value){
+                        return Validador()
+                            .maxLength(300, msg: "Máximo de 300 caractéres")
+                            .valido(value);
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
                     child: CustomButton(
                       text: "Cadastrar",
                       onPressed: (){
